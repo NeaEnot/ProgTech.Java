@@ -1,36 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class ExcavatorTractor {
-	private int _startPosX;
-    private int _startPosY;
-    private int _pictureWidth;
-    private int _pictureHeight;
-    final private int etWidth = 90;
-    final private int etHeight = 50;
-    public int MaxSpeed;
-    public float Weight;
-    public Color MainColor;
+public class ExcavatorTractor extends Tractor {
     public Color DopColor;
     public Color FlagColor;
     public boolean Flag;
     public boolean FrontTube;
     public boolean BackTube;
     
-    private TrackRollers trackRollers;
-    
-    public ExcavatorTractor(int d, int e, Color mainColor, 
+    public ExcavatorTractor(int maxSpeed, int weight, Color mainColor, 
         Color dopColor, Color flagColor, boolean flag, boolean frontTube, boolean backTube)
     {
-        MaxSpeed = d;
-        Weight = e;
-        MainColor = mainColor;
+    	super(maxSpeed, weight, mainColor);
         DopColor = dopColor;
         FlagColor = flagColor;
         Flag = flag;
         FrontTube = frontTube;
         BackTube = backTube;
-        trackRollers = new TrackRollers((int)(Math.random() * 3) + 4);
     }
 
     public void SetPosition(int x, int y, int width, int height)
@@ -71,15 +57,11 @@ public class ExcavatorTractor {
         }
     }
 
-    public void DrawET(Graphics g)
+    public void Draw(Graphics g)
     {
-        g.setColor(MainColor);
-        g.fillRect(_startPosX + 3, _startPosY + 25, 50, 15);
-        g.drawRect(_startPosX + 40, _startPosY + 7, 7, 25);
-        
-        g.setColor(Color.GRAY);
-        g.fillOval(_startPosX, _startPosY + 35, 55, 15);
-        trackRollers.DrawTrackRollers(g, DopColor, _startPosX, _startPosY + 38);
+    	super.Draw(g);
+    	
+        trackRollers.Draw(g, DopColor, _startPosX, _startPosY + 38);
         
         g.setColor(DopColor);
         g.drawLine(_startPosX + 3, _startPosY + 30, _startPosX - 2, _startPosY + 30);

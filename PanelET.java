@@ -5,27 +5,31 @@ import javax.swing.JPanel;
 
 public class PanelET extends JPanel {
 	
-	ExcavatorTractor excavatorTractor; 
+	ITransport transport; 
 	
-	public void updateET(int width, int height) {
-		excavatorTractor = new ExcavatorTractor((int)(Math.random() * 200) + 100, (int)(Math.random() * 1000) + 1000, 
-                Color.BLUE, Color.BLACK, Color.RED, true, true, true);
-		excavatorTractor.SetPosition((int)(Math.random() * 200) + 100, (int)(Math.random() * 100) + 50, width, height);
+	public void updateTransport(int width, int height, boolean isExcavatorTractor) {
+		if (isExcavatorTractor) {
+			transport = new ExcavatorTractor((int)(Math.random() * 200) + 100, (int)(Math.random() * 1000) + 1000, 
+											Color.BLUE, Color.BLACK, Color.RED, true, true, true);
+		} else {
+			transport = new Tractor((int)(Math.random() * 200) + 100, (int)(Math.random() * 1000) + 1000, Color.BLUE);
+		}
+		transport.SetPosition((int)(Math.random() * 200) + 100, (int)(Math.random() * 100) + 50, width, height);
 	}
 	
 	public void MoveTransport(Direction direction) {
 		switch (direction) {
 		case Right:
-			excavatorTractor.MoveTransport(Direction.Right);
+			transport.MoveTransport(Direction.Right);
 			break;
 		case Left:
-			excavatorTractor.MoveTransport(Direction.Left);
+			transport.MoveTransport(Direction.Left);
 			break;
 		case Up:
-			excavatorTractor.MoveTransport(Direction.Up);
+			transport.MoveTransport(Direction.Up);
 			break;
 		case Down:
-			excavatorTractor.MoveTransport(Direction.Down);
+			transport.MoveTransport(Direction.Down);
 			break;
 		}
 	}
@@ -33,8 +37,8 @@ public class PanelET extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		if (excavatorTractor != null) {
-			excavatorTractor.DrawET(g);
+		if (transport != null) {
+			transport.Draw(g);
 		}
 	}
 }
