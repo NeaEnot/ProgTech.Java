@@ -19,44 +19,7 @@ public class ExcavatorTractor extends Tractor {
         BackTube = backTube;
     }
 
-    public void SetPosition(int x, int y, int width, int height)
-    {
-        _startPosX = x;
-        _startPosY = y;
-        _pictureWidth = width;
-        _pictureHeight = height;
-    }
-
-    public void MoveTransport(Direction direction)
-    {
-        float step = MaxSpeed * 100 / Weight;
-        switch (direction) {
-            case Right:
-                if (_startPosX + step < _pictureWidth - etWidth) {
-                    _startPosX += step;
-                    _startPosY += step;
-                }
-                break;
-            case Left:
-                if (_startPosX - step > 5) {
-                    _startPosX -= step;
-                }
-                break;
-            case Up:
-                if (_startPosY - step > 0)
-                {
-                    _startPosY -= step;
-                }
-                break;
-            case Down:
-                if (_startPosY + step < _pictureHeight - etHeight)
-                {
-                    _startPosY += step;
-                }
-                break;
-        }
-    }
-
+    @Override
     public void Draw(Graphics g)
     {
     	super.Draw(g);

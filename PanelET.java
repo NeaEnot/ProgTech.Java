@@ -5,7 +5,12 @@ import javax.swing.JPanel;
 
 public class PanelET extends JPanel {
 	
-	ITransport transport; 
+	ITransport transport;
+	
+	public void setTransport(ITransport t) {
+		transport = t;
+		transport.SetPosition(10, 10, 90, 50);
+	}
 	
 	public void updateTransport(int width, int height, boolean isExcavatorTractor) {
 		if (isExcavatorTractor) {
