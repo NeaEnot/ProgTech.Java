@@ -1,10 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class TrackRollers implements IRollers {
+public class TrackRollersCircle implements IRollers {
+
 	private NumberOfRollers numberOfRollers;
 	
-	public TrackRollers(int n) {
+	public TrackRollersCircle(int n) {
 		switch (n) {
 		case 4:
 			numberOfRollers = NumberOfRollers.Four;
@@ -23,8 +24,6 @@ public class TrackRollers implements IRollers {
 	
 	@Override
 	public void Draw(Graphics g, Color color, int startPosX, int startPosY) {
-		g.setColor(color);
-		
 		int num, r;
 		
 		switch (numberOfRollers) {
@@ -47,7 +46,16 @@ public class TrackRollers implements IRollers {
 		}
 		
 		for (int i = 0; i < num; i++) {
+			g.setColor(color);
 			g.fillOval(startPosX + r * i, startPosY, 10, 10);
+			
+			Color alter = new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
+			g.setColor(alter);
+			
+			g.fillOval(startPosX + r * i, startPosY + 3, 3, 3);
+			g.fillOval(startPosX + r * i + 6, startPosY + 3, 3, 3);
+			g.fillOval(startPosX + r * i + 3, startPosY, 3, 3);
+			g.fillOval(startPosX + r * i + 3, startPosY + 6, 3, 3);
 		}
 	}
 }

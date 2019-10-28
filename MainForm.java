@@ -47,15 +47,25 @@ public class MainForm {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton btnCreate = new JButton("Create");
-		btnCreate.addActionListener(new ActionListener() {
+		JButton btnCreateT = new JButton("CreateT");
+		btnCreateT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				((PanelET) panel).updateET(panel.getSize().width, panel.getSize().height);
+				((PanelET) panel).updateTransport(panel.getSize().width, panel.getSize().height, false);
 				panel.repaint();
 			}
 		});
-		btnCreate.setBounds(15, 16, 77, 29);
-		panel.add(btnCreate);
+		btnCreateT.setBounds(15, 16, 102, 29);
+		panel.add(btnCreateT);
+
+		JButton button = new JButton("CreateET");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				((PanelET) panel).updateTransport(panel.getSize().width, panel.getSize().height, true);
+				panel.repaint();				
+			}
+		});
+		button.setBounds(15, 52, 102, 29);
+		panel.add(button);
 		
 		JButton btnLeft = new JButton("L");
 		btnLeft.addActionListener(new ActionListener() {
