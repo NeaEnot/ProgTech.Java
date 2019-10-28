@@ -1,23 +1,29 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
+import javax.swing.ListSelectionModel;
+import java.awt.List;
 
 public class ParkingForm {
 
 	private JFrame frame;
 	private JTextField takeTextField;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -30,17 +36,11 @@ public class ParkingForm {
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
+	
 	public ParkingForm() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1280, 801);
@@ -89,28 +89,28 @@ public class ParkingForm {
 		frame.getContentPane().add(btnSetExcavatotTractor);
 		
 		JLabel lblTakeTracktor = new JLabel("Take Tracktor");
-		lblTakeTracktor.setBounds(1053, 304, 105, 20);
+		lblTakeTracktor.setBounds(1073, 422, 126, 20);
 		frame.getContentPane().add(lblTakeTracktor);
 		
 		JLabel lblPosition = new JLabel("Position:");
-		lblPosition.setBounds(1036, 340, 69, 20);
+		lblPosition.setBounds(1056, 458, 143, 20);
 		frame.getContentPane().add(lblPosition);
 		
 		takeTextField = new JTextField();
-		takeTextField.setBounds(1120, 337, 45, 26);
+		takeTextField.setBounds(1140, 455, 59, 26);
 		frame.getContentPane().add(takeTextField);
 		takeTextField.setColumns(10);
 		
 		PanelET takePanel = new PanelET();
-		takePanel.setBounds(1036, 421, 127, 115);
+		takePanel.setBounds(1056, 539, 143, 115);
 		frame.getContentPane().add(takePanel);
 		
 		JLabel lblIsmore = new JLabel("isMore: ");
-		lblIsmore.setBounds(1053, 555, 127, 20);
+		lblIsmore.setBounds(1073, 673, 126, 20);
 		frame.getContentPane().add(lblIsmore);
 		
 		JLabel lblIsless = new JLabel("isLess: ");
-		lblIsless.setBounds(1053, 591, 112, 20);
+		lblIsless.setBounds(1073, 709, 126, 20);
 		frame.getContentPane().add(lblIsless);
 		
 		JButton btnTakeTractor = new JButton("Take Tractor");
@@ -138,7 +138,20 @@ public class ParkingForm {
 				takePanel.repaint();
 			}
 		});
-		btnTakeTractor.setBounds(1053, 376, 127, 29);
+		btnTakeTractor.setBounds(1073, 494, 126, 29);
 		frame.getContentPane().add(btnTakeTractor);
+		
+		List list = new List();
+		for (int i = 0; i < 5; i++) {
+			list.add("Level " + i);
+		}
+		list.setBounds(1062, 108, 154, 115);
+		list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel.setLevel(list.getSelectedIndex());
+				panel.repaint();
+			}
+		});
+		frame.getContentPane().add(list);
 	}
 }
