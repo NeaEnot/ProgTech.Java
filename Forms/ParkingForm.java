@@ -1,3 +1,5 @@
+package Forms;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -17,12 +19,30 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
+
+import Classes.ExcavatorTractor;
+import Classes.Tractor;
+import Classes.Transport;
+import Delegates.TransportDelegate;
+import Interfaces.ITransport;
+import Panels.PanelET;
+import Panels.PanelParking;
+
 import java.awt.List;
 
 public class ParkingForm {
+	
+	class Delegate extends TransportDelegate {
+		@Override
+		public void invoke(ITransport transport) {
+			int position = panel.ADD(transport);
+			panel.repaint();
+		}
+	}
 
 	private JFrame frame;
 	private JTextField takeTextField;
+	PanelParking panel;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -47,46 +67,9 @@ public class ParkingForm {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		PanelParking panel = new PanelParking();
+		panel = new PanelParking();
 		panel.setBounds(15, 16, 1006, 713);
 		frame.getContentPane().add(panel);
-		
-		JButton btnSetTractor = new JButton("Set Tractor");
-		btnSetTractor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Tractor tractor = new Tractor((int)(Math.random() * 200) + 100, 
-											  (int)(Math.random() * 1000) + 1000, 
-											  new Color((int)(Math.random() * 256), 
-													    (int)(Math.random() * 256), 
-													    (int)(Math.random() * 256)));
-				int position = panel.ADD(tractor);
-				panel.repaint();
-			}
-		});
-		btnSetTractor.setBounds(1036, 16, 207, 29);
-		frame.getContentPane().add(btnSetTractor);
-		
-		JButton btnSetExcavatotTractor = new JButton("Set ExcavatorTractor");
-		btnSetExcavatotTractor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ExcavatorTractor excavatorTractor = new ExcavatorTractor((int)(Math.random() * 200) + 100, 
-						  												 (int)(Math.random() * 1000) + 1000, 
-						  												 new Color((int)(Math.random() * 256), 
-						  														   (int)(Math.random() * 256), 
-						  														   (int)(Math.random() * 256)),
-						  												 new Color((int)(Math.random() * 256), 
-						  														   (int)(Math.random() * 256), 
-						  														   (int)(Math.random() * 256)),
-						  												 new Color((int)(Math.random() * 256), 
-						  														   (int)(Math.random() * 256), 
-						  														   (int)(Math.random() * 256)),
-						  												 true, true, true);
-				int position = panel.ADD(excavatorTractor);
-				panel.repaint();
-			}
-		});
-		btnSetExcavatotTractor.setBounds(1036, 61, 207, 29);
-		frame.getContentPane().add(btnSetExcavatotTractor);
 		
 		JLabel lblTakeTracktor = new JLabel("Take Tracktor");
 		lblTakeTracktor.setBounds(1073, 422, 126, 20);
@@ -153,5 +136,14 @@ public class ParkingForm {
 			}
 		});
 		frame.getContentPane().add(list);
+		
+		JButton btnAddTractor = new JButton("Add Tractor");
+		btnAddTractor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigForm conf = new ConfigForm(new Delegate());
+			}
+		});
+		btnAddTractor.setBounds(1073, 36, 126, 29);
+		frame.getContentPane().add(btnAddTractor);
 	}
 }

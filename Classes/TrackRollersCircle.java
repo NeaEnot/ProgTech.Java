@@ -1,5 +1,10 @@
+package Classes;
+
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Enums.NumberOfRollers;
+import Interfaces.IRollers;
 
 public class TrackRollersCircle implements IRollers {
 

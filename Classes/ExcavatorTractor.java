@@ -1,3 +1,5 @@
+package Classes;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -17,6 +19,10 @@ public class ExcavatorTractor extends Tractor {
         Flag = flag;
         FrontTube = frontTube;
         BackTube = backTube;
+    }
+    
+    public void setDopColor(Color dp) {
+    	DopColor = dp;
     }
 
     @Override

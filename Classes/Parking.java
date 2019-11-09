@@ -1,6 +1,11 @@
+package Classes;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashMap;
+
+import Interfaces.IRollers;
+import Interfaces.ITransport;
 
 public class Parking<T extends ITransport, R extends IRollers> {
 	private HashMap<Integer, T> _places;
