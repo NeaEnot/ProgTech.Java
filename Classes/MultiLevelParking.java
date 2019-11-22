@@ -39,10 +39,6 @@ public class MultiLevelParking {
     
     public boolean SaveData(String filename) throws IOException
     {
-        /*if (File.Exists(filename))
-        {
-            File.Delete(filename);
-        }*/
     	FileWriter fw = new FileWriter(filename);
         WriteToFile("CountLeveles:"+ parkingStages.size() + "\n", fw);
         for (Parking<ITransport, IRollers> level : parkingStages)
@@ -70,6 +66,33 @@ public class MultiLevelParking {
         
         return true;
     }
+    
+    public boolean SaveLevel(String filename, int lvl) throws IOException
+    {
+    	FileWriter fw = new FileWriter(filename);
+        WriteToFile("Level:"+ lvl + "\n", fw);
+        Parking<ITransport, IRollers> level = parkingStages.get(lvl);
+        for (int i = 0; i < countPlaces; i++)
+        {
+            ITransport tractor = level.get(i);
+            if (tractor != null)
+            {
+                if (tractor.getClass().getName() == "Classes.Tractor")
+                {
+                    WriteToFile(i + ":Tractor:", fw);
+                }
+                if (tractor.getClass().getName() == "Classes.ExcavatorTractor")
+                {
+                    WriteToFile(i + ":ExcavatorTractor:", fw);
+                }
+                WriteToFile(tractor.ToString() + "\n", fw);
+            }
+        }
+        
+        fw.flush();
+        
+        return true;
+    }
 
     private void WriteToFile(String text, FileWriter fw)
     {
@@ -82,17 +105,11 @@ public class MultiLevelParking {
 
     public boolean LoadData(String filename) throws IOException
     {
-        /*if (!File.Exists(filename))
-        {
-            return false;
-        }*/
-
         FileReader fr = new FileReader(filename);
         String bufferTextFromFile = "";
         
         int c;
         while ((c = fr.read()) != -1) {
-             
         	bufferTextFromFile += (char)c;
         } 
         
@@ -130,6 +147,48 @@ public class MultiLevelParking {
 	        	}
 	        	
 	        	parkingStages.get(counter).setTractor(Integer.parseInt(strs[i].split(":")[0]), tractor);
+        	}
+        }
+        
+        return true;
+    }
+    
+    public boolean LoadLevel(String filename) throws IOException
+    {
+        FileReader fr = new FileReader(filename);
+        String bufferTextFromFile = "";
+        int lvl;
+        
+        int c;
+        while ((c = fr.read()) != -1) {
+        	bufferTextFromFile += (char)c;
+        } 
+        
+        bufferTextFromFile = bufferTextFromFile.replace("\r", "");
+        String[] strs = bufferTextFromFile.split("\n");
+        if (strs[0].contains("Level")) {
+        	lvl = Integer.parseInt(strs[0].split(":")[1]);
+        } else {
+        	return false;
+        }
+        
+        int counter = -1;
+        ITransport tractor = null;
+        
+        for(int i = 1; i < strs.length; ++i) {
+        	if(strs[i] == null) {
+        		continue;
+        	}
+        	
+        	if (strs[i].split(":").length > 1) {
+	        	if(strs[i].split(":")[1].equals("Tractor")) {
+	        		tractor = new Tractor(strs[i].split(":")[2]);
+	        	} 
+	        	else if(strs[i].split(":")[1].equals("ExcavatorTractor")) {
+	        		tractor = new ExcavatorTractor(strs[i].split(":")[2]);
+	        	}
+	        	
+	        	parkingStages.get(lvl).setTractor(Integer.parseInt(strs[i].split(":")[0]), tractor);
         	}
         }
         

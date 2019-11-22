@@ -158,14 +158,14 @@ public class ParkingForm {
 		frame.getContentPane().add(btnAddTractor);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(15, 16, 139, 31);
+		menuBar.setBounds(15, 16, 81, 31);
 		frame.getContentPane().add(menuBar);
 		
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmSave = new JMenuItem("Save");
-		mntmSave.addActionListener(new ActionListener() {
+		JMenuItem mntmFileSave = new JMenuItem("Save");
+		mntmFileSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
@@ -177,10 +177,10 @@ public class ParkingForm {
 				}
 			}
 		});
-		mnFile.add(mntmSave);
+		mnFile.add(mntmFileSave);
 		
-		JMenuItem mntmLoad = new JMenuItem("Load");
-		mntmLoad.addActionListener(new ActionListener() {
+		JMenuItem mntmFileLoad = new JMenuItem("Load");
+		mntmFileLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
@@ -193,6 +193,41 @@ public class ParkingForm {
 				}
 			}
 		});
-		mnFile.add(mntmLoad);
+		mnFile.add(mntmFileLoad);
+		
+		JMenu mnLevel = new JMenu("Level");
+		menuBar.add(mnLevel);
+		
+		JMenuItem mntmLevelSave = new JMenuItem("Save");
+		mntmLevelSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Save");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    panel.SaveCurrentLevel(file.getAbsolutePath() + ".lvl");
+				    panel.repaint();
+				}
+			}
+		});
+		mnLevel.add(mntmLevelSave);
+		
+		JMenuItem mntmLevelLoad = new JMenuItem("Load");
+		mntmLevelLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Load");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    panel.LoadCurrentLevel(file.getAbsolutePath());
+				    panel.repaint();
+				}
+			}
+		});
+		mnLevel.add(mntmLevelLoad);
 	}
 }

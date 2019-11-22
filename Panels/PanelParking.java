@@ -71,4 +71,20 @@ public class PanelParking extends JPanel {
 			e.printStackTrace();
 		}
 	}
+
+	public void SaveCurrentLevel(String filename) {
+		try {
+			parking.SaveLevel(filename, currentLevel);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void LoadCurrentLevel(String filename) {
+		try {
+			parking.LoadLevel(filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
