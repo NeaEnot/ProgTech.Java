@@ -1,6 +1,7 @@
 package Panels;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -10,7 +11,7 @@ import Classes.MultiLevelParking;
 import Interfaces.ITransport;
 
 public class PanelParking extends JPanel {
-	MultiLevelParking parking = new MultiLevelParking(20, 1000, 700);
+	MultiLevelParking parking = new MultiLevelParking(5, 1000, 700);
     
     Queue<ITransport> queue = new LinkedList<ITransport>();
 
@@ -20,7 +21,7 @@ public class PanelParking extends JPanel {
     public PanelParking()
     {
     	super();
-        parking = new MultiLevelParking(20, 1000, 700);
+        parking = new MultiLevelParking(countLevel, 1000, 700);
     }
 	
 	public void paint(Graphics g) {
@@ -53,5 +54,21 @@ public class PanelParking extends JPanel {
 	
 	public boolean LESS(ITransport transport) {
 		return parking.level(currentLevel).LESS(transport);
+	}
+	
+	public void SaveData(String filename) {
+		try {
+			parking.SaveData(filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void LoadData(String filename) {
+		try {
+			parking.LoadData(filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

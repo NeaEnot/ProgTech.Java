@@ -7,6 +7,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -29,6 +31,15 @@ import Panels.PanelET;
 import Panels.PanelParking;
 
 import java.awt.List;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.event.MenuListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.event.MenuEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class ParkingForm {
 	
@@ -63,37 +74,37 @@ public class ParkingForm {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 801);
+		frame.setBounds(100, 100, 1154, 688);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		panel = new PanelParking();
-		panel.setBounds(15, 16, 1006, 713);
+		panel.setBounds(15, 66, 878, 506);
 		frame.getContentPane().add(panel);
 		
 		JLabel lblTakeTracktor = new JLabel("Take Tracktor");
-		lblTakeTracktor.setBounds(1073, 422, 126, 20);
+		lblTakeTracktor.setBounds(970, 298, 126, 20);
 		frame.getContentPane().add(lblTakeTracktor);
 		
 		JLabel lblPosition = new JLabel("Position:");
-		lblPosition.setBounds(1056, 458, 143, 20);
+		lblPosition.setBounds(953, 334, 81, 20);
 		frame.getContentPane().add(lblPosition);
 		
 		takeTextField = new JTextField();
-		takeTextField.setBounds(1140, 455, 59, 26);
+		takeTextField.setBounds(1037, 331, 59, 26);
 		frame.getContentPane().add(takeTextField);
 		takeTextField.setColumns(10);
 		
 		PanelET takePanel = new PanelET();
-		takePanel.setBounds(1056, 539, 143, 115);
+		takePanel.setBounds(953, 415, 143, 115);
 		frame.getContentPane().add(takePanel);
 		
 		JLabel lblIsmore = new JLabel("isMore: ");
-		lblIsmore.setBounds(1073, 673, 126, 20);
+		lblIsmore.setBounds(970, 549, 126, 20);
 		frame.getContentPane().add(lblIsmore);
 		
 		JLabel lblIsless = new JLabel("isLess: ");
-		lblIsless.setBounds(1073, 709, 126, 20);
+		lblIsless.setBounds(970, 585, 126, 20);
 		frame.getContentPane().add(lblIsless);
 		
 		JButton btnTakeTractor = new JButton("Take Tractor");
@@ -121,14 +132,14 @@ public class ParkingForm {
 				takePanel.repaint();
 			}
 		});
-		btnTakeTractor.setBounds(1073, 494, 126, 29);
+		btnTakeTractor.setBounds(970, 370, 126, 29);
 		frame.getContentPane().add(btnTakeTractor);
 		
 		List list = new List();
 		for (int i = 0; i < 5; i++) {
 			list.add("Level " + i);
 		}
-		list.setBounds(1062, 108, 154, 115);
+		list.setBounds(959, 138, 154, 115);
 		list.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panel.setLevel(list.getSelectedIndex());
@@ -143,7 +154,45 @@ public class ParkingForm {
 				ConfigForm conf = new ConfigForm(new Delegate());
 			}
 		});
-		btnAddTractor.setBounds(1073, 36, 126, 29);
+		btnAddTractor.setBounds(970, 66, 126, 29);
 		frame.getContentPane().add(btnAddTractor);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(15, 16, 139, 31);
+		frame.getContentPane().add(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Save");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    panel.SaveData(file.getAbsolutePath() + ".txt");
+				}
+			}
+		});
+		mnFile.add(mntmSave);
+		
+		JMenuItem mntmLoad = new JMenuItem("Load");
+		mntmLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Load");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    panel.LoadData(file.getAbsolutePath());
+				    panel.repaint();
+				}
+			}
+		});
+		mnFile.add(mntmLoad);
 	}
 }

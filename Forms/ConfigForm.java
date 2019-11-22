@@ -108,7 +108,7 @@ public class ConfigForm {
 													Color.getHSBColor((float) Math.random(), 
 																		(float) Math.random(), 
 																		(float) Math.random()), 
-													true, true, true);
+													false, true, true);
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {

@@ -21,6 +21,23 @@ public class ExcavatorTractor extends Tractor {
         BackTube = backTube;
     }
     
+    public ExcavatorTractor(String info)
+    {
+    	super(info);
+    	
+        String[] strs = info.split(";");
+        if (strs.length == 7)
+        {
+            MaxSpeed = Integer.parseInt(strs[0]);
+            Weight = Float.parseFloat(strs[1]);
+            MainColor = new Color(Integer.parseInt(strs[2]));
+            DopColor = new Color(Integer.parseInt(strs[3]));
+            Flag = Boolean.getBoolean(strs[4]);
+            FrontTube = Boolean.getBoolean(strs[5]);
+            BackTube = Boolean.getBoolean(strs[6]);
+        }
+    }
+    
     public void setDopColor(Color dp) {
     	DopColor = dp;
     }
@@ -59,5 +76,12 @@ public class ExcavatorTractor extends Tractor {
         if (BackTube) {
             g.fillRect(_startPosX + 23, _startPosY + 10, 5, 15);
         }
+    }
+    
+    @Override
+    public String ToString()
+    {
+        return super.ToString() + ";" + DopColor.getRGB() + ";" + Flag + ";" + 
+                FrontTube + ";" + BackTube;
     }
 }
