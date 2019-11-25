@@ -107,47 +107,50 @@ public class MultiLevelParking {
     {
         FileReader fr = new FileReader(filename);
         String bufferTextFromFile = "";
+        int counter = -1;
         
         int c;
-        while ((c = fr.read()) != -1) {
+        while ((char)(c = fr.read()) != '\n') {
         	bufferTextFromFile += (char)c;
-        } 
+        }
         
-        bufferTextFromFile = bufferTextFromFile.replace("\r", "");
-        String[] strs = bufferTextFromFile.split("\n");
-        if(strs[0].contains("CountLeveles")) {
-        	int count = Integer.parseInt(strs[0].split(":")[1]);
+        if(bufferTextFromFile.contains("CountLeveles")) {
+        	int count = Integer.parseInt(bufferTextFromFile.split(":")[1]);
         	if(parkingStages != null) {
         		parkingStages.clear();
         	}
         	parkingStages = new ArrayList<Parking<ITransport, IRollers>>(count);
+            bufferTextFromFile = "";
         } else {
         	return false;
         }
         
-        int counter = -1;
-        ITransport tractor = null;
-        
-        for(int i = 1; i < strs.length; ++i) {
-        	if(strs[i].equals("Level")) {
-        		counter++;
-        		parkingStages.add(new Parking<ITransport, IRollers>(countPlaces, pictureWidth, pictureHeight));
-        		continue;
-        	}
-        	if(strs[i] == null) {
-        		continue;
-        	}
-        	
-        	if (strs[i].split(":").length > 1) {
-	        	if(strs[i].split(":")[1].equals("Tractor")) {
-	        		tractor = new Tractor(strs[i].split(":")[2]);
-	        	} 
-	        	else if(strs[i].split(":")[1].equals("ExcavatorTractor")) {
-	        		tractor = new ExcavatorTractor(strs[i].split(":")[2]);
-	        	}
-	        	
-	        	parkingStages.get(counter).setTractor(Integer.parseInt(strs[i].split(":")[0]), tractor);
-        	}
+        while ((c = fr.read()) != -1) {
+        	if ((char)c == '\n') {        		
+        		ITransport tractor = null;
+                
+                if(bufferTextFromFile.equals("Level")) {
+                	counter++;
+                	parkingStages.add(new Parking<ITransport, IRollers>(countPlaces, pictureWidth, pictureHeight));
+                    bufferTextFromFile = "";
+                	continue;
+                }
+                
+                if (bufferTextFromFile.split(":").length > 1) {
+        	       	if(bufferTextFromFile.split(":")[1].equals("Tractor")) {
+        	       		tractor = new Tractor(bufferTextFromFile.split(":")[2]);
+        	       	} 
+        	       	else if(bufferTextFromFile.split(":")[1].equals("ExcavatorTractor")) {
+        	       		tractor = new ExcavatorTractor(bufferTextFromFile.split(":")[2]);
+        	       	}
+        	       	
+        	       	parkingStages.get(counter).setTractor(Integer.parseInt(bufferTextFromFile.split(":")[0]), tractor);
+                }
+                
+                bufferTextFromFile = "";
+            } else {
+            	bufferTextFromFile += (char)c;
+            }
         }
         
         return true;
@@ -157,39 +160,49 @@ public class MultiLevelParking {
     {
         FileReader fr = new FileReader(filename);
         String bufferTextFromFile = "";
-        int lvl;
+        int lvl = 0;
         
         int c;
-        while ((c = fr.read()) != -1) {
+        while ((char)(c = fr.read()) != '\n') {
         	bufferTextFromFile += (char)c;
-        } 
+        }
         
-        bufferTextFromFile = bufferTextFromFile.replace("\r", "");
-        String[] strs = bufferTextFromFile.split("\n");
-        if (strs[0].contains("Level")) {
-        	lvl = Integer.parseInt(strs[0].split(":")[1]);
+        if (bufferTextFromFile.contains("Level")) {
+           	lvl = Integer.parseInt(bufferTextFromFile.split(":")[1]);
+           	bufferTextFromFile = "";
         } else {
         	return false;
         }
         
-        int counter = -1;
-        ITransport tractor = null;
+        if (parkingStages.size() < lvl) {
+        	return false;
+        }
+
+    	parkingStages.set(lvl, new Parking<ITransport, IRollers>(countPlaces, pictureWidth, pictureHeight));
         
-        for(int i = 1; i < strs.length; ++i) {
-        	if(strs[i] == null) {
-        		continue;
-        	}
-        	
-        	if (strs[i].split(":").length > 1) {
-	        	if(strs[i].split(":")[1].equals("Tractor")) {
-	        		tractor = new Tractor(strs[i].split(":")[2]);
-	        	} 
-	        	else if(strs[i].split(":")[1].equals("ExcavatorTractor")) {
-	        		tractor = new ExcavatorTractor(strs[i].split(":")[2]);
-	        	}
-	        	
-	        	parkingStages.get(lvl).setTractor(Integer.parseInt(strs[i].split(":")[0]), tractor);
-        	}
+        while ((c = fr.read()) != -1) {
+        	if ((char)c == '\n') {                
+                ITransport tractor = null;
+                
+                if(bufferTextFromFile == null) {
+                	continue;
+                }
+                
+                if (bufferTextFromFile.split(":").length > 2) {
+        	       	if(bufferTextFromFile.split(":")[1].equals("Tractor")) {
+        	       		tractor = new Tractor(bufferTextFromFile.split(":")[2]);
+        	       	} 
+        	       	else if(bufferTextFromFile.split(":")[1].equals("ExcavatorTractor")) {
+        	       		tractor = new ExcavatorTractor(bufferTextFromFile.split(":")[2]);
+        	       	}
+        	       	
+        	       	parkingStages.get(lvl).setTractor(Integer.parseInt(bufferTextFromFile.split(":")[0]), tractor);
+                }
+                
+                bufferTextFromFile = "";
+            } else {
+            	bufferTextFromFile += (char)c;
+            }
         }
         
         return true;
