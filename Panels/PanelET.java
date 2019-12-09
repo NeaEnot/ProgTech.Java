@@ -1,7 +1,14 @@
+package Panels;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
+
+import Classes.ExcavatorTractor;
+import Classes.Tractor;
+import Enums.Direction;
+import Interfaces.ITransport;
 
 public class PanelET extends JPanel {
 	
@@ -9,7 +16,7 @@ public class PanelET extends JPanel {
 	
 	public void setTransport(ITransport t) {
 		transport = t;
-		transport.SetPosition(10, 10, 90, 50);
+		transport.SetPosition(20, 20, 90, 50);
 	}
 	
 	public void updateTransport(int width, int height, boolean isExcavatorTractor) {
@@ -37,6 +44,10 @@ public class PanelET extends JPanel {
 			transport.MoveTransport(Direction.Down);
 			break;
 		}
+	}
+	
+	public ITransport getTransport() {
+		return transport;
 	}
 	
 	@Override

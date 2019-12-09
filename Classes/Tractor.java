@@ -1,5 +1,10 @@
+package Classes;
+
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Enums.Direction;
+import Interfaces.IRollers;
 
 public class Tractor extends Transport {
 
@@ -14,17 +19,11 @@ public class Tractor extends Transport {
         Weight = weight;
         MainColor = mainColor;
         
-        switch ((int)(Math.random() * 3)) {
-        case 0:
-        	trackRollers = new TrackRollers((int)(Math.random() * 3) + 4);
-        	break;
-        case 1:
-        	trackRollers = new TrackRollersCircle((int)(Math.random() * 3) + 4);
-        	break;
-        case 2:
-        	trackRollers = new TrackRollersSpokes((int)(Math.random() * 3) + 4);
-        	break;
-        }
+        trackRollers = new TrackRollers((int)(Math.random() * 3) + 4);
+    }
+    
+    public void setTrackRollers(IRollers rollers) {
+    	trackRollers = rollers;
     }
     
 	@Override

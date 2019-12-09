@@ -1,5 +1,10 @@
+package Classes;
+
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Enums.Direction;
+import Interfaces.ITransport;
 
 public abstract class Transport implements ITransport {
 
@@ -17,6 +22,10 @@ public abstract class Transport implements ITransport {
         _startPosY = y;
         _pictureWidth = width;
         _pictureHeight = height;
+	}
+	
+	public void setColor(Color mc) {
+		MainColor = mc;
 	}
 
 	abstract public void MoveTransport(Direction direction);

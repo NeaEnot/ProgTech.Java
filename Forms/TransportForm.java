@@ -1,9 +1,16 @@
+package Forms;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Classes.ExcavatorTractor;
+import Enums.Direction;
+import Panels.PanelET;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

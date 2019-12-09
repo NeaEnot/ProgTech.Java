@@ -1,8 +1,13 @@
+package Panels;
+
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.swing.JPanel;
+
+import Classes.MultiLevelParking;
+import Interfaces.ITransport;
 
 public class PanelParking extends JPanel {
 	MultiLevelParking parking = new MultiLevelParking(20, 1000, 700);

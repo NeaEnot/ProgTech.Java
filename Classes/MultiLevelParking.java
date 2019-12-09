@@ -1,4 +1,9 @@
+package Classes;
+
 import java.util.ArrayList;
+
+import Interfaces.IRollers;
+import Interfaces.ITransport;
 
 public class MultiLevelParking {
 	ArrayList<Parking<ITransport, IRollers>> parkingStages;
