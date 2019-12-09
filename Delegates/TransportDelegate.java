@@ -4,7 +4,5 @@ import Interfaces.ITransport;
 
 abstract public class TransportDelegate {
 
-	public void invoke(ITransport transport) {
-		
-	}
+	abstract public void invoke(ITransport transport);
 }
