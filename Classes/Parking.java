@@ -130,8 +130,13 @@ public class Parking<T extends ITransport, R extends IRollers> {
         }
     }
     
+    public void setTractor(int index, T tractor) {
+    	_places.put(index, tractor);
+    	_places.get(index).SetPosition(5 + index / 5 * _placeSizeWidth + 5, index % 5 * _placeSizeHeight + 15, PictureWidth, PictureHeight);
+    }
+    
     public ITransport get(int index) {
-    	if (CheckFreePlace(index))
+    	if (!CheckFreePlace(index))
         {
             return _places.get(index);
         }

@@ -22,6 +22,19 @@ public class Tractor extends Transport {
         trackRollers = new TrackRollers((int)(Math.random() * 3) + 4);
     }
     
+    public Tractor(String info)
+    {
+        String[] strs = info.split(";");
+        if (strs.length == 3)
+        {
+            MaxSpeed = Integer.parseInt(strs[0]);
+            Weight = Float.parseFloat(strs[1]);
+            MainColor = new Color(Integer.parseInt(strs[2]));
+        }
+        
+        trackRollers = new TrackRollers((int)(Math.random() * 3) + 4);
+    }
+    
     public void setTrackRollers(IRollers rollers) {
     	trackRollers = rollers;
     }
@@ -68,5 +81,11 @@ public class Tractor extends Transport {
         
         trackRollers.Draw(g, Color.BLACK, _startPosX, _startPosY + 38);
 	}
+	
+	@Override
+	public String ToString()
+    {
+        return MaxSpeed + ";" + Weight + ";" + MainColor.getRGB();
+    }
 
 }
