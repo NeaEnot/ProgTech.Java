@@ -69,29 +69,36 @@ public class MultiLevelParking {
     
     public boolean SaveLevel(String filename, int lvl) throws IOException
     {
-    	FileWriter fw = new FileWriter(filename);
-        WriteToFile("Level:"+ lvl + "\n", fw);
         Parking<ITransport, IRollers> level = parkingStages.get(lvl);
-        for (int i = 0; i < countPlaces; i++)
-        {
-            ITransport tractor = level.get(i);
-            if (tractor != null)
+	    
+	if (level != null) {
+    	    FileWriter fw = new FileWriter(filename);
+            WriteToFile("Level:"+ lvl + "\n", fw);
+	
+            for (int i = 0; i < countPlaces; i++)
             {
-                if (tractor.getClass().getName() == "Classes.Tractor")
+                ITransport tractor = level.get(i);
+                if (tractor != null)
                 {
-                    WriteToFile(i + ":Tractor:", fw);
+                    if (tractor.getClass().getName() == "Classes.Tractor")
+                    {
+                        WriteToFile(i + ":Tractor:", fw);
+                    }
+                    if (tractor.getClass().getName() == "Classes.ExcavatorTractor")
+                    {
+                        WriteToFile(i + ":ExcavatorTractor:", fw);
+                    }
+                    WriteToFile(tractor.ToString() + "\n", fw);
                 }
-                if (tractor.getClass().getName() == "Classes.ExcavatorTractor")
-                {
-                    WriteToFile(i + ":ExcavatorTractor:", fw);
-                }
-                WriteToFile(tractor.ToString() + "\n", fw);
             }
-        }
         
-        fw.flush();
+            fw.flush();
         
-        return true;
+            return true;
+	}
+	else {
+	    return false;
+	}
     }
 
     private void WriteToFile(String text, FileWriter fw)
